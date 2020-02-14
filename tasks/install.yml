@@ -1,0 +1,7 @@
+---
+- name: Install keepalived packages
+  apt:
+    name:
+      - keepalived
+    force: yes
+    cache_valid_time: 3600

@@ -1,0 +1,38 @@
+---
+    - name: Prepare Hetzner Robot Mock API
+      hosts: localhost
+      tasks:
+        - name: Run Hetzner Robot Mock API Container
+          shell: docker run -d --rm --network molecule --name hetzner-robot {{ hetzner_vswitch_webservice_mock }}
+        - name: Create vSwitch
+          uri:
+            url: "{{ hetzner_vswitch_webservice_base_url }}/vswitch"
+            method: POST
+            user: "{{ hetzner_vswitch_webservice_username }}"
+            password: "{{ hetzner_vswitch_webservice_password }}"
+            status_code: 201
+            body:
+              vlan: 4023
+              name: failover
+              cancelled: false
+              server: []
+            force_basic_auth: yes
+            body_format: json
+    
+    - name: Prepare controller
+      hosts: localhost
+      tasks:
+        - name: Prepare controller
+          include: controller.yml
+    
+    - name: Install package dependencies on platforms hosts
+      hosts: platforms
+      tasks:
+        - name: Install required packages
+          package:
+            name: "{{ item }}"
+            state: present
+          with_items:
+            - iproute2
+            - netscript
+            - ifupdown

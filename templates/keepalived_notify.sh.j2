@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+TYPE=$1
+NAME=$2
+STATE=$3
+
+echo "Executing failover IP switch"  | logger -t keepalived_notify.sh
+if [ "$STATE" == "MASTER" ] ; then
+    HOST_IP=$(ip route get 8.8.8.8 | awk '{print $7 }')
+    echo "Setting failover IP $FAILOVER_IP to server IP $HOST_IP" | logger -t keepalived_notify.sh
+fi
+echo "Finished failover IP switch"  | logger -t keepalived_notify.sh

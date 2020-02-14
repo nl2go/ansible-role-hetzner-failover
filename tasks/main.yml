@@ -1,0 +1,5 @@
+---
+  - import_tasks: install.yml
+    tags: [hetzner_failover, install]
+  - import_tasks: configure.yml
+    tags: [hetzner_failover, config]

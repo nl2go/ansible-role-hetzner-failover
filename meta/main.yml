@@ -1,0 +1,21 @@
+---
+  galaxy_info:
+    author: nl2go
+    role_name: hetzner_failover
+    description: Setup automatic IP failover using hetzner vSwitch and keepalived
+    company: Newsletter2Go GmbH
+    issue_tracker_url: https://github.com/nl2go/ansible-role-hetzner-failover/issues
+    license: MIT
+    min_ansible_version: 2.6
+    platforms:
+      - name: Ubuntu
+        versions:
+          - all
+      - name: Debian
+        versions:
+          - all
+    galaxy_tags:
+      - hetzner
+      - failover
+      - keepalived
+  dependencies: []

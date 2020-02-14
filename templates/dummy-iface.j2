@@ -1,0 +1,6 @@
+# is tracked in keepalived as well and can be used for manual failover/maintenance
+auto dummy0
+iface dummy0 inet static
+    address 10.10.10.1/24
+    pre-up ip link add dummy0 type dummy
+    post-down ip link del dummy0

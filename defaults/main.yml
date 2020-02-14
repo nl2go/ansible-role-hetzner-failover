@@ -1,0 +1,7 @@
+---
+hetzner_failover_keepalived_vrrp_version: 3
+hetzner_failover_keepalived_advert_int: 1
+hetzner_failover_keepalived_notify_script: /usr/local/bin/keepalived_notify.sh
+hetzner_failover_keepalived_auth_type: AH
+
+hetzner_failover_keepalived_vswitch_routing_table: vswitch

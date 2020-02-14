@@ -1,0 +1,34 @@
+global_defs {
+  vrrp_version {{ hetzner_failover_keepalived_vrrp_version }}
+  enable_script_security
+  script_user root
+}
+
+vrrp_instance hetzner_failover {
+  state {{ hetzner_failover_keepalived_state }}
+  interface {{ hetzner_failover_keepalived_track_device }}
+  virtual_router_id {{ hetzner_failover_keepalived_virtual_router_id }}
+  priority {{ hetzner_failover_keepalived_priority }}
+  nopreempt
+  advert_int {{ hetzner_failover_keepalived_advert_int }}
+  authentication {
+      auth_type {{ hetzner_failover_keepalived_auth_type }}
+      auth_pass {{ hetzner_failover_keepalived_auth_pass }}
+  }
+
+  track_interface {
+    {{ hetzner_failover_keepalived_physical_device }}
+    dummy0
+  }
+
+  notify {{ hetzner_failover_keepalived_notify_script }}
+
+  unicast_src_ip {{ hetzner_failover_keepalived_vswitch_ip }}
+  unicast_peer {
+    {{ hetzner_failover_keepalived_peer_ip }}
+  }
+
+  virtual_ipaddress {
+    {{ hetzner_failover_keepalived_public_ipaddress }}/{{ hetzner_failover_keepalived_public_network_prefix }} dev {{ hetzner_failover_keepalived_track_device }}
+  }
+}

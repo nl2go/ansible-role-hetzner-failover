@@ -1,0 +1,14 @@
+---
+- name: Check interface status
+  command: ip link list
+  changed_when: no
+  register: ip_link_list_result
+
+- name: Stop network interface
+  changed_when: no
+  command: "ifdown {{ hetzner_failover_keepalived_track_device }}"
+  when: hetzner_failover_keepalived_track_device in ip_link_list_result.stdout
+
+- name: Start network interface
+  changed_when: no
+  command:  "ifup {{ hetzner_failover_keepalived_track_device }}"
