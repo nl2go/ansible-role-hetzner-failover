@@ -4,7 +4,7 @@
       - lint
       - dependency
       - cleanup
-      - destroy
+      #- destroy
       - syntax
       - create
       - prepare
