@@ -1,5 +1,4 @@
 [![Travis (.org) branch](https://img.shields.io/travis/nl2go/ansible-role-hetzner-failover/master)](https://travis-ci.org/nl2go/ansible-role-hetzner-failover)
-[![Codecov](https://img.shields.io/codecov/c/github/nl2go/ansible-role-hetzner-failover)](https://codecov.io/gh/nl2go/ansible-role-hetzner-failover)
 [![Ansible Galaxy](https://img.shields.io/badge/role-nl2go.hetzner_failover-blue.svg)](https://galaxy.ansible.com/nl2go/hetzner_failover/)
 
 # Ansible Role: Hetzner failover using a vSwitch and keepalived
