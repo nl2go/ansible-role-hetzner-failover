@@ -24,15 +24,3 @@
       tasks:
         - name: Prepare controller
           include: controller.yml
-    
-    - name: Install package dependencies on platforms hosts
-      hosts: platforms
-      tasks:
-        - name: Install required packages
-          package:
-            name: "{{ item }}"
-            state: present
-          with_items:
-            - iproute2
-            - netscript
-            - ifupdown
