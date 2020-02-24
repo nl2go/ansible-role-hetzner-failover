@@ -11,7 +11,6 @@
       - wget https://raw.githubusercontent.com/nl2go/docker-molecule/1.0.4/requirements.txt
       - wget https://raw.githubusercontent.com/nl2go/docker-molecule/1.0.4/docker-compose.yml
       - docker-compose up -d
-      - pip install ansible-filter==1.0.1
     
     script:
       - docker-compose exec molecule molecule test --all
