@@ -24,3 +24,31 @@
       tasks:
         - name: Prepare controller
           include: controller.yml
+
+    - name: Add servers to vSwitch
+      hosts: platforms
+      tasks:
+        - name: Determine server IP's
+          set_fact:
+            platform_ips: "{{ groups['platforms'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list }}"
+          delegate_to: localhost
+          run_once: yes
+        - name: Append string to list
+          set_fact:
+            server_ips: "{{ server_ips | default([]) + [ {'server_ip': item, 'status': 'ready'} ] }}"
+          with_items: "{{ platform_ips }}"
+          delegate_to: localhost
+          run_once: yes
+        - name: Add servers to vSwitch
+          uri:
+            url: "{{ hetzner_vswitch_webservice_base_url }}/vswitch/1"
+            method: POST
+            user: "{{ hetzner_vswitch_webservice_username }}"
+            password: "{{ hetzner_vswitch_webservice_password }}"
+            status_code: 200
+            body:
+              server: "{{ server_ips }}"
+            force_basic_auth: yes
+            body_format: json
+          delegate_to: localhost
+          run_once: yes
