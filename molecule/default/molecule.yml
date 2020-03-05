@@ -9,7 +9,7 @@
       - create
       - prepare
       - converge
-      #- idempotence TODO: Check why last step is always changed
+      - idempotence
       - side_effect
       - verify
       - cleanup

@@ -22,29 +22,15 @@
     - name: keepalived1
       image: ubuntu:16.04
       dockerfile: ../resources/Dockerfile.j2
-      command: /sbin/init
-      privileged: True
-      volumes:
-        - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      tmpfs:
-        - /tmp
-        - /run
       capabilities:
-        - SYS_ADMIN
+        - NET_ADMIN
       groups:
         - platforms
     - name: keepalived2
       image: ubuntu:16.04
       dockerfile: ../resources/Dockerfile.j2
-      command: /sbin/init
-      privileged: True
-      volumes:
-        - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      tmpfs:
-        - /tmp
-        - /run
       capabilities:
-        - SYS_ADMIN
+        - NET_ADMIN
       groups:
         - platforms
   provisioner:

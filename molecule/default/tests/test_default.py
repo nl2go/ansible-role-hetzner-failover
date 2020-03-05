@@ -27,12 +27,13 @@ class RescueModeTest(unittest.TestCase):
         assert f.group == 'root'
 
     @idata(host_generator())
-    def test_keepalived_service_running(self, hostname):
+    def test_keepalived_installed_and_running(self, hostname):
         host = testinfra.get_host("docker://" + hostname)
 
         package = host.package("keepalived")
         assert package.is_installed
 
-        service = host.service("keepalived")
-        assert service.is_running
-        assert service.is_enabled
+        keepalived_procs_cmd = host.run("pgrep keepalived | wc -l")
+        keepalived_procs = int(keepalived_procs_cmd.stdout.strip())
+
+        assert keepalived_procs > 0
