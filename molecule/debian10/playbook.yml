@@ -10,12 +10,13 @@
         vlan: 4023
         ipv4_address: 192.168.200.0
         ipv4_netmask: 255.255.255.0
-    hetzner_failover_keepalived_virtual_router_id: 42
+    hetzner_failover_keepalived_public_virtual_router_id: 42
     hetzner_failover_keepalived_public_ipaddress: 154.222.4.34
     hetzner_failover_keepalived_public_network_prefix: 29
     hetzner_failover_keepalived_public_default_gateway: 154.222.4.33
-    keepalived_failover_private_ipaddress: 192.168.200.250
-    keepalived_failover_private_network_prefix: 24
-    keepalived_failover_private_default_gateway: 192.168.200.1
+    hetzner_failover_keepalived_private_virtual_router_id: 84
+    hetzner_failover_keepalived_private_ipaddress: 192.168.200.250
+    hetzner_failover_keepalived_private_network_prefix: 24
+    hetzner_failover_keepalived_private_default_gateway: 192.168.200.1
     hetzner_failover_keepalived_auth_pass: X98a8378gdDDdS
     hetzner_failover_keepalived_vswich_id: 4023

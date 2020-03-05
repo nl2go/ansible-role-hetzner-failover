@@ -9,7 +9,7 @@
       - create
       - prepare
       - converge
-      - idempotence
+      # - idempotence # cuurently checks if service is running but that does not work in docker
       - side_effect
       - verify
       - cleanup

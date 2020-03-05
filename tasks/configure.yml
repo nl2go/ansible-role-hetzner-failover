@@ -54,10 +54,11 @@
 - name: Copy across dummy interface settings
   template:
     src: dummy-iface.j2
-    dest: /etc/network/interfaces.d/dummy0
+    dest: /etc/network/interfaces.d/{{ hetzner_failover_keepalived_dummy_device }}
     owner: root
     group: root
     mode: 0644
+  notify: Restart dummy network interface
 
 - name: Set default keepalived priority
   set_fact:
@@ -85,7 +86,7 @@
     group: root
     mode: 0755
 
-- name: Flush handlers as keepalived needs proper network settings in order to started
+- name: Flush handlers as keepalived needs proper network settings in order to be started
   meta: flush_handlers
 
 - name: Ensure keepalived is started and enabled on boot

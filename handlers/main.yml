@@ -6,3 +6,6 @@
 
   - name: Restart vswitch network interface
     include_tasks: restart_track_device.yml
+
+  - name: Restart dummy network interface
+    include_tasks: restart_dummy_device.yml
