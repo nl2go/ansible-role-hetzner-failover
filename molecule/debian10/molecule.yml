@@ -9,7 +9,7 @@
       - create
       - prepare
       - converge
-      #- idempotence TODO: Check why last step is always changed
+      - idempotence
       - side_effect
       - verify
       - cleanup
@@ -20,17 +20,31 @@
     name: yamllint
   platforms:
     - name: keepalived1
-      image: debian:10
+      image: ubuntu:16.04
       dockerfile: ../resources/Dockerfile.j2
+      command: /sbin/init
+      privileged: True
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      tmpfs:
+        - /tmp
+        - /run
       capabilities:
-        - NET_ADMIN
+        - SYS_ADMIN
       groups:
         - platforms
     - name: keepalived2
-      image: debian:10
+      image: ubuntu:16.04
       dockerfile: ../resources/Dockerfile.j2
+      command: /sbin/init
+      privileged: True
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      tmpfs:
+        - /tmp
+        - /run
       capabilities:
-        - NET_ADMIN
+        - SYS_ADMIN
       groups:
         - platforms
   provisioner:

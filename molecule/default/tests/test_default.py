@@ -25,3 +25,14 @@ class RescueModeTest(unittest.TestCase):
         assert f.exists
         assert f.user == 'root'
         assert f.group == 'root'
+
+    @idata(host_generator())
+    def test_keepalived_service_running(self, hostname):
+        host = testinfra.get_host("docker://" + hostname)
+
+        package = host.package("keepalived")
+        assert package.is_installed
+
+        service = host.service("keepalived")
+        assert service.is_running
+        assert service.is_enabled
