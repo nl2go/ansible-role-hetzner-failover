@@ -2,8 +2,11 @@
 - name: Remove Hetzner Robot Mock API
   hosts: localhost
   tasks:
-    - name: Delete Hetzner Robot Mock API container
-      shell: docker rm -f hetzner-robot 2> /dev/null
-      register: deletion_result
-      changed_when: deletion_result.rc == 0
-      failed_when: deletion_result.rc not in [0,1]
+    - name: Stop Hetzner Robot Mock API instance
+      nl2go_hcloud_server:
+        api_token: "{{ lookup('env','HCLOUD_TOKEN') }}"
+        name: hetzner-robot
+        server_type: cx11
+        location: nbg1
+        image: "{{ hetzner_robot_mock_service_hcloud_image_id }}"
+        state: absent
