@@ -8,8 +8,8 @@
         - MOLECULE_ROLE_NAME: "$(basename $TRAVIS_BUILD_DIR)"
     
     before_script:
-      - wget https://raw.githubusercontent.com/nl2go/docker-molecule/1.0.4/requirements.txt
-      - wget https://raw.githubusercontent.com/nl2go/docker-molecule/1.0.4/docker-compose.yml
+      - wget https://raw.githubusercontent.com/nl2go/docker-molecule/2.22-n2g-1.0.0/requirements.txt
+      - wget https://raw.githubusercontent.com/nl2go/docker-molecule/2.22-n2g-1.0.0/docker-compose.yml
       - docker-compose up -d
       - docker-compose exec molecule pip install dnspython requests==2.20.1 docker docker-compose hcloud molecule[hetznercloud]
       - docker-compose exec molecule pip install git+https://github.com/pycontribs/molecule-hetznercloud.git@master#egg=molecule-hetznercloud
