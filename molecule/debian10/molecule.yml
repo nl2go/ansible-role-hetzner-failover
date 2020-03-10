@@ -15,7 +15,6 @@
       - cleanup
       - destroy
   driver:
-    name: docker
     name: hetznercloud
   lint: |
     set -e
