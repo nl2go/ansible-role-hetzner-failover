@@ -1,0 +1,29 @@
+---
+- name: Verify keepalived
+  hosts: platforms
+  tasks:
+    - name: Check if keepalived is started
+      service:
+        name: keepalived
+        state: started
+      register: keepalived_status_cmd
+
+    - name: Assert service was running
+      assert:
+        that: keepalived_status_cmd.changed == False
+
+    - name: Assert service was not failing
+      assert:
+        that: keepalived_status_cmd.failed == False
+
+    - name: Get initial failover IP status
+      shell: |
+        set -o pipefail
+        cat /var/run/keepalived.hetzner_failover_ip.state
+      args:
+        executable: /bin/bash
+      register: failover_status_cmd
+
+    - name: Assert status command was not failing
+      assert:
+        that: failover_status_cmd.failed == False

@@ -16,22 +16,21 @@
       - destroy
   driver:
     name: docker
+    name: hetznercloud
   lint: |
     set -e
     yamllint .
   platforms:
     - name: keepalived1
-      image: ubuntu:16.04
-      dockerfile: ../resources/Dockerfile.j2
-      capabilities:
-        - NET_ADMIN
+      server_type: cx11
+      image: debian-10
+      location: nbg1
       groups:
         - platforms
     - name: keepalived2
-      image: ubuntu:16.04
-      dockerfile: ../resources/Dockerfile.j2
-      capabilities:
-        - NET_ADMIN
+      server_type: cx11
+      image: debian-10
+      location: nbg1
       groups:
         - platforms
   provisioner:
@@ -39,10 +38,9 @@
     inventory:
       group_vars:
         all:
-          hetzner_vswitch_webservice_base_url: http://hetzner-robot:3000
           hetzner_vswitch_webservice_username: robot
           hetzner_vswitch_webservice_password: secret
-          hetzner_vswitch_webservice_mock: nl2go/hetzner-robot-api-mock:1.2.3
+          hetzner_robot_mock_service_hcloud_image_id: "13532056"
       host_vars:
         keepalived1:
           hetzner_vswitch_host:
@@ -65,6 +63,7 @@
       prepare: ../resources/playbooks/prepare.yml
       cleanup: ../resources/playbooks/cleanup.yml
   verifier:
+    name: ansible
     lint: |
       set -e
       ansible-lint
