@@ -1,8 +1,9 @@
 ---
   driver:
     name: hetznercloud
-  lint:
-    name: yamllint
+  lint: |
+    set -e
+    yamllint .
   platforms:
     - name: debian9
       server_type: cx11
@@ -36,8 +37,9 @@
           hetzner_vswitch_webservice_username: robot
           hetzner_vswitch_webservice_password: secret
           hetzner_robot_mock_service_hcloud_image_id: "13532056"
-    lint:
-      name: ansible-lint
+    lint: |
+      set -e
+      ansible-lint
     playbooks:
       prepare: ../resources/playbooks/prepare.yml
       cleanup: ../resources/playbooks/cleanup.yml
@@ -45,5 +47,6 @@
     name: testinfra
     env:
       PYTHONWARNINGS: "ignore:.*U.*mode is deprecated:DeprecationWarning"
-    lint:
-      name: flake8
+    lint: |
+      set -e
+      flake8

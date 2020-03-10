@@ -15,9 +15,9 @@
       - cleanup
       - destroy
   driver:
-    name: docker
-  lint:
-    name: yamllint
+  lint: |
+    set -e
+    yamllint .
   platforms:
     - name: keepalived1
       image: ubuntu:16.04
@@ -57,14 +57,13 @@
           hetzner_failover_keepalived_state: BACKUP
           hetzner_failover_keepalived_vswitch_ip: 192.168.200.2
           hetzner_failover_keepalived_peer_ip: 192.168.200.1
-    lint:
-      name: ansible-lint
+    lint: |
+      set -e
+      ansible-lint
     playbooks:
       prepare: ../resources/playbooks/prepare.yml
       cleanup: ../resources/playbooks/cleanup.yml
   verifier:
-    name: testinfra
-    env:
-      HETZNER_ROBOT_BASE_URL: http://hetzner-robot:3000
-    lint:
-      name: flake8
+    lint: |
+      set -e
+      ansible-lint
