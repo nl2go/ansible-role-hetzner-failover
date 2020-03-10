@@ -15,6 +15,7 @@
       - cleanup
       - destroy
   driver:
+    name: docker
   lint: |
     set -e
     yamllint .
