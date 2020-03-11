@@ -9,6 +9,16 @@
   command: "ifdown {{ hetzner_failover_keepalived_dummy_device }}"
   when: hetzner_failover_keepalived_dummy_device in dummy_ip_link_list_result.stdout
 
+- name: Delete IP link
+  changed_when: no
+  command: "ip link delete {{ hetzner_failover_keepalived_dummy_device }}"
+  when: hetzner_failover_keepalived_dummy_device in dummy_ip_link_list_result.stdout
+
+- name: Add IP link
+  changed_when: no
+  command:  "ip link add \
+    link {{ default_ipv4_interface }} name {{ hetzner_failover_keepalived_dummy_device }} type vlan id {{ hetzner_failover_keepalived_vswich_id }}"
+
 - name: Start dummy network interface
   changed_when: no
   command:  "ifup {{ hetzner_failover_keepalived_dummy_device }}"
