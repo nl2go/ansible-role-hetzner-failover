@@ -1,19 +1,4 @@
 ---
-  scenario:
-    test_sequence:
-      - lint
-      - cleanup
-      - destroy
-      - dependency
-      - syntax
-      - create
-      - prepare
-      - converge
-      # - idempotence # cuurently checks if service is running but that does not work in docker
-      - side_effect
-      - verify
-      - cleanup
-      - destroy
   driver:
     name: hetznercloud
   lint: |
