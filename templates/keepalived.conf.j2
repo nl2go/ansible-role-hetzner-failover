@@ -33,6 +33,7 @@ vrrp_instance hetzner_failover_ip {
   }
 }
 
+{% if hetzner_failover_keepalived_private_ipaddress is defined %}
 vrrp_instance hetzner_private_failover_ip {
   state {{ hetzner_failover_keepalived_state }}
   interface {{ hetzner_failover_keepalived_track_device }}
@@ -61,3 +62,4 @@ vrrp_instance hetzner_private_failover_ip {
     {{ hetzner_failover_keepalived_private_ipaddress }}/{{ hetzner_failover_keepalived_private_network_prefix }} dev {{ hetzner_failover_keepalived_track_device }}
   }
 }
+{% endif %}

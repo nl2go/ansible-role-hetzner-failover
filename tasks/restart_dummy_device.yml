@@ -1,14 +1,14 @@
 ---
-- name: Check interface status
+- name: Check dummy interface status
   command: ip link list
   changed_when: no
-  register: ip_link_list_result
+  register: dummy_ip_link_list_result
 
-- name: Stop network interface
+- name: Stop dummy network interface
   changed_when: no
   command: "ifdown {{ hetzner_failover_keepalived_dummy_device }}"
-  when: hetzner_failover_keepalived_dummy_device in ip_link_list_result.stdout
+  when: hetzner_failover_keepalived_dummy_device in dummy_ip_link_list_result.stdout
 
-- name: Start network interface
+- name: Start dummy network interface
   changed_when: no
   command:  "ifup {{ hetzner_failover_keepalived_dummy_device }}"
