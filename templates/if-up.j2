@@ -6,3 +6,11 @@ if [ "$IFACE" = "{{ hetzner_failover_keepalived_track_device }}" ] || [ "$IFACE"
   ip rule add to {{ hetzner_failover_keepalived_public_ipaddress }} lookup {{ hetzner_failover_keepalived_vswitch_routing_table }}
   ip route add default via {{ hetzner_failover_keepalived_public_default_gateway }} dev {{ hetzner_failover_keepalived_track_device }} table {{ hetzner_failover_keepalived_vswitch_routing_table }}
 fi
+
+{% if hetzner_failover_keepalived_private_ipaddress is defined %}
+if [ "$IFACE" = "{{ hetzner_failover_keepalived_track_device }}" ] || [ "$IFACE" = "--all" ]; then
+  ip addr add {{ hetzner_failover_keepalived_private_ipaddress }}/{{ hetzner_failover_keepalived_private_network_prefix }} dev {{ hetzner_failover_keepalived_track_device }}
+  ip rule add from {{ hetzner_failover_keepalived_private_ipaddress }} lookup {{ hetzner_failover_keepalived_vswitch_routing_table }}
+  ip rule add to {{ hetzner_failover_keepalived_private_ipaddress }} lookup {{ hetzner_failover_keepalived_vswitch_routing_table }}
+fi
+{% endif %}

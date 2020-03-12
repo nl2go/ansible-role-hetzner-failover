@@ -1,50 +1,32 @@
 ---
-  scenario:
-    test_sequence:
-      - lint
-      - cleanup
-      - destroy
-      - dependency
-      - syntax
-      - create
-      - prepare
-      - converge
-      #- idempotence TODO: Check why last step is always changed
-      - side_effect
-      - verify
-      - cleanup
-      - destroy
   driver:
-    name: docker
-  lint:
-    name: yamllint
+    name: hetznercloud
+  lint: |
+    set -e
+    yamllint .
   platforms:
     - name: debian9
-      image: debian:9
-      dockerfile: ../resources/Dockerfile.j2
-      capabilities:
-        - NET_ADMIN
+      server_type: cx11
+      image: debian-9
+      location: nbg1
       groups:
         - platforms
     - name: debian10
-      image: debian:10
-      dockerfile: ../resources/Dockerfile.j2
-      capabilities:
-        - NET_ADMIN
+      server_type: cx11
+      image: debian-10
+      location: nbg1
       groups:
         - platforms
     - name: Ubuntu16
-      image: ubuntu:16.04
-      dockerfile: ../resources/Dockerfile.j2
-      capabilities:
-        - NET_ADMIN
+      server_type: cx11
+      image: ubuntu-16.04
+      location: nbg1
       groups:
         - platforms
     - name: Ubuntu18
-      image: ubuntu:18.04
-      dockerfile: ../resources/Dockerfile.j2
-      capabilities:
-        - NET_ADMIN
+      server_type: cx11
+      image: ubuntu-18.04
+      location: nbg1
       groups:
         - platforms
   provisioner:
@@ -52,18 +34,19 @@
     inventory:
       group_vars:
         all:
-          hetzner_vswitch_webservice_base_url: http://hetzner-robot:3000
           hetzner_vswitch_webservice_username: robot
           hetzner_vswitch_webservice_password: secret
-          hetzner_vswitch_webservice_mock: nl2go/hetzner-robot-api-mock:1.2.3
-    lint:
-      name: ansible-lint
+          hetzner_robot_mock_service_hcloud_image_id: "13532056"
+    lint: |
+      set -e
+      ansible-lint
     playbooks:
       prepare: ../resources/playbooks/prepare.yml
       cleanup: ../resources/playbooks/cleanup.yml
   verifier:
     name: testinfra
     env:
-      HETZNER_ROBOT_BASE_URL: http://hetzner-robot:3000
-    lint:
-      name: flake8
+      PYTHONWARNINGS: "ignore:.*U.*mode is deprecated:DeprecationWarning"
+    lint: |
+      set -e
+      flake8

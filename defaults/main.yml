@@ -5,3 +5,4 @@ hetzner_failover_keepalived_notify_script: /usr/local/bin/keepalived_notify.sh
 hetzner_failover_keepalived_auth_type: AH
 
 hetzner_failover_keepalived_vswitch_routing_table: vswitch
+hetzner_failover_keepalived_dummy_device: dummy0

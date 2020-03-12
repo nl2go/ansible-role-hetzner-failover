@@ -1,9 +1,35 @@
 ---
     - name: Prepare Hetzner Robot Mock API
+      hosts: all
+      tasks:
+        - name: Gather facts
+          setup:
+
+    - name: Prepare Hetzner Robot Mock API
       hosts: localhost
       tasks:
-        - name: Run Hetzner Robot Mock API Container
-          shell: docker run -d --rm --network molecule --name hetzner-robot {{ hetzner_vswitch_webservice_mock }}
+        - name: Run Hetzner Robot Mock API instance
+          nl2go_hcloud_server:
+            api_token: "{{ lookup('env','HCLOUD_TOKEN') }}"
+            name: hetzner-robot
+            server_type: cx11
+            location: nbg1
+            image: "{{ hetzner_robot_mock_service_hcloud_image_id }}"
+            state: present
+          register: mock_server_result
+
+        - name: Set URL of Hetzner Robot Mock API service
+          set_fact:
+            hetzner_vswitch_webservice_base_url: http://{{ mock_server_result.nl2go_hcloud_server.ipv4_address }}:3000
+
+        - name: Waiting for the mock server to start
+          wait_for:
+            host: "{{ mock_server_result.nl2go_hcloud_server.ipv4_address }}"
+            port: 3000
+            delay: 1
+            timeout: 180
+          delegate_to: localhost
+          
         - name: Create vSwitch
           uri:
             url: "{{ hetzner_vswitch_webservice_base_url }}/vswitch"
@@ -18,7 +44,28 @@
               server: []
             force_basic_auth: yes
             body_format: json
-    
+
+        - name: Determine server IP's
+          set_fact:
+            platform_ips: "{{ groups['platforms'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list }}"
+
+        - name: Append server ip to vSwitch server list
+          set_fact:
+            server_ips: "{{ server_ips | default([]) + [ {'server_ip': item, 'status': 'ready'} ] }}"
+          with_items: "{{ platform_ips }}"
+
+        - name: Add servers to vSwitch
+          uri:
+            url: "{{ hetzner_vswitch_webservice_base_url }}/vswitch/1"
+            method: POST
+            user: "{{ hetzner_vswitch_webservice_username }}"
+            password: "{{ hetzner_vswitch_webservice_password }}"
+            status_code: 200
+            body:
+              server: "{{ server_ips }}"
+            force_basic_auth: yes
+            body_format: json
+
     - name: Prepare controller
       hosts: localhost
       tasks:

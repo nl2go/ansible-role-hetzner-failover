@@ -1,4 +1,23 @@
 ---
+- name: Determine Hetzner Robot Mock API URL
+  hosts: all
+  tasks:
+    - name: Check Hetzner Robot Mock API instance
+      nl2go_hcloud_server:
+        api_token: "{{ lookup('env','HCLOUD_TOKEN') }}"
+        name: hetzner-robot
+        server_type: cx11
+        location: nbg1
+        image: "{{ hetzner_robot_mock_service_hcloud_image_id }}"
+        state: present
+      register: mock_server_result
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Set URL of Hetzner Robot Mock API service
+      set_fact:
+        hetzner_vswitch_webservice_base_url: http://{{ mock_server_result.nl2go_hcloud_server.ipv4_address }}:3000
+
 - name: Converge
   hosts: all
   roles:
@@ -16,7 +35,7 @@
     hetzner_failover_keepalived_state: MASTER
     hetzner_failover_keepalived_vswitch_ip: 192.168.200.1
     hetzner_failover_keepalived_peer_ip: 192.168.200.2
-    hetzner_failover_keepalived_virtual_router_id: 42
+    hetzner_failover_keepalived_public_virtual_router_id: 42
     hetzner_failover_keepalived_public_ipaddress: 154.222.4.34
     hetzner_failover_keepalived_public_network_prefix: 29
     hetzner_failover_keepalived_public_default_gateway: 154.222.4.33
