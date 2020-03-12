@@ -1,9 +1,11 @@
-[![Travis (.org) branch](https://img.shields.io/travis/nl2go/ansible-role-hetzner-failover/master)](https://travis-ci.org/nl2go/ansible-role-hetzner-failover)
+[![Build Status](https://travis-ci.com/nl2go/ansible-role-hetzner-failover.svg?branch=master)](https://travis-ci.com/nl2go/ansible-role-hetzner-failover)
 [![Ansible Galaxy](https://img.shields.io/badge/role-nl2go.hetzner_failover-blue.svg)](https://galaxy.ansible.com/nl2go/hetzner_failover/)
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/nl2go/ansible-role-hetzner-failover)](https://galaxy.ansible.com/nl2go/hetzner_failover)
+[![Ansible Galaxy Downloads](https://img.shields.io/ansible/role/d/46553.svg?color=blue)](https://galaxy.ansible.com/nl2go/hetzner_failover/)
 
 # Ansible Role: Hetzner failover using a vSwitch and keepalived
 
-An Ansible Role that was inspired by [an article about hetzner failover from DTOne](https://dtone.engineering/2019/from_failovers_to_keepalived_over_vswitches_with_hetzner/). It aims to deploy a highly available setup of 2 servers sharing a single IP by utilizing [hetzner vSwitch](https://wiki.hetzner.de/index.php/Vswitch/en) and keepalived. The role should be used together with the [nl2go vSwitch role](https://github.com/nl2go/ansible-role-hetzner-vswitch) for setting up the vSwitch. It needs an extra IP subnet with public IP adresses to be ordered for the configured vSwitch. The role does not utilize the failover IP service provided by hetzner.
+An Ansible Role that was inspired by [an article about hetzner failover](https://dtone.engineering/2019/from_failovers_to_keepalived_over_vswitches_with_hetzner/) by @dtone. It aims to deploy a highly available setup of 2 servers sharing a single IP by utilizing [hetzner vSwitch](https://wiki.hetzner.de/index.php/Vswitch/en) and keepalived. The role should be used together with the [nl2go vSwitch role](https://github.com/nl2go/ansible-role-hetzner-vswitch) for setting up the vSwitch. It needs an extra IP subnet with public IP adresses to be ordered for the configured vSwitch. The role does *NOT* utilize the failover IP service provided by hetzner.
 
 ## Prerequisites
 
@@ -29,7 +31,7 @@ hetzner_vswitch_instances:
 ### keepalived configuration  
 
 ```yaml
-hetzner_failover_keepalived_virtual_router_id: 42
+hetzner_failover_keepalived_public_virtual_router_id: 42
 
 hetzner_failover_keepalived_public_ipaddress: 154.222.4.34 # single IP from the additional IP subnet used as failover IP
 hetzner_failover_keepalived_public_network_prefix: 29 # netmask prefix of the additional IP subnet
