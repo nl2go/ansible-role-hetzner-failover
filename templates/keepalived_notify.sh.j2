@@ -6,9 +6,9 @@ NAME=$2
 STATE=$3
 
 echo $STATE > /var/run/keepalived.$NAME.state
-echo "Executing failover IP switch"  | logger -t keepalived_notify.sh
+echo "Executing $NAME failover IP switch"  | logger -t keepalived_notify.sh
 if [ "$STATE" == "MASTER" ] ; then
     HOST_IP=$(ip route get 8.8.8.8 | awk '{print $7 }')
     echo "Setting $NAME failover IP to server IP $HOST_IP" | logger -t keepalived_notify.sh
 fi
-echo "Finished failover IP switch"  | logger -t keepalived_notify.sh
+echo "Finished $NAME failover IP switch"  | logger -t keepalived_notify.sh

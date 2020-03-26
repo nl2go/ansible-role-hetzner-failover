@@ -1,5 +1,5 @@
 ---
-    - name: Prepare Hetzner Robot Mock API
+    - name: Gather facts for all inventory hosts in order to use them in the prepare step
       hosts: all
       tasks:
         - name: Gather facts
