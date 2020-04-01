@@ -43,6 +43,8 @@
     playbooks:
       prepare: ../resources/playbooks/prepare.yml
       cleanup: ../resources/playbooks/cleanup.yml
+      create: ../resources/playbooks/create.yml
+      destroy: ../resources/playbooks/destroy.yml
   verifier:
     name: testinfra
     env:
