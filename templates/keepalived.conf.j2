@@ -5,16 +5,16 @@ global_defs {
 }
 
 vrrp_instance hetzner_failover_ip {
+{% if not hetzner_failover_keepalived_nopreempt %}
   state {{ hetzner_failover_keepalived_state }}
+{% endif %}
   interface {{ hetzner_failover_keepalived_track_device }}
   virtual_router_id {{ hetzner_failover_keepalived_public_virtual_router_id }}
   priority {{ hetzner_failover_keepalived_priority }}
+{% if hetzner_failover_keepalived_nopreempt %}
   nopreempt
+{% endif %}
   advert_int {{ hetzner_failover_keepalived_advert_int }}
-  authentication {
-      auth_type {{ hetzner_failover_keepalived_auth_type }}
-      auth_pass {{ hetzner_failover_keepalived_auth_pass }}
-  }
 
   track_interface {
     {{ hetzner_failover_keepalived_physical_device }}
@@ -35,16 +35,16 @@ vrrp_instance hetzner_failover_ip {
 
 {% if hetzner_failover_keepalived_private_ipaddress is defined %}
 vrrp_instance hetzner_private_failover_ip {
+{% if not hetzner_failover_keepalived_nopreempt %}
   state {{ hetzner_failover_keepalived_state }}
+{% endif %}
   interface {{ hetzner_failover_keepalived_track_device }}
   virtual_router_id {{ hetzner_failover_keepalived_private_virtual_router_id }}
   priority {{ hetzner_failover_keepalived_priority }}
+{% if hetzner_failover_keepalived_nopreempt %}
   nopreempt
+{% endif %}
   advert_int {{ hetzner_failover_keepalived_advert_int }}
-  authentication {
-      auth_type {{ hetzner_failover_keepalived_auth_type }}
-      auth_pass {{ hetzner_failover_keepalived_auth_pass }}
-  }
 
   track_interface {
     {{ hetzner_failover_keepalived_physical_device }}

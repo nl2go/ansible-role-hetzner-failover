@@ -39,5 +39,4 @@
     hetzner_failover_keepalived_public_ipaddress: 154.222.4.34
     hetzner_failover_keepalived_public_network_prefix: 29
     hetzner_failover_keepalived_public_default_gateway: 154.222.4.33
-    hetzner_failover_keepalived_auth_pass: X98a8378gdDDdS
     hetzner_failover_keepalived_vswich_id: 4023

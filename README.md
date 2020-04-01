@@ -37,8 +37,6 @@ hetzner_failover_keepalived_public_ipaddress: 154.222.4.34 # single IP from the 
 hetzner_failover_keepalived_public_network_prefix: 29 # netmask prefix of the additional IP subnet
 hetzner_failover_keepalived_public_default_gateway: 154.222.4.33 # gateway IP of the additional IP subnet
 
-hetzner_failover_keepalived_auth_pass: X98a8378gdDDdS # should be encrypted using ansible vault
-
 hetzner_failover_keepalived_vswich_id: 4023 # should match the vlan id configured in hetzner_vswitch_instances
 ```
 
