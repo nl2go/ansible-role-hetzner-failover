@@ -62,6 +62,31 @@ all:
       hetzner_failover_keepalived_vswitch_ip: 192.168.200.2 # IP of the host in the vSwitch VLAN has to be repeated here
       hetzner_failover_keepalived_peer_ip: 192.168.200.1 # vSwitch IP of the host keepalived should peer with
 ```
+### Notify Script
+
+Custom notify script may be utilized to perform additional actions after the failover.
+
+```yaml
+hetzner_failover_keepalived_notify_script: /usr/local/bin/keepalived_notify.sh
+```
+
+To run custom notify script specify the script path within the `hetzner_failover_keepalived_notify_script` variable.
+
+```yaml
+hetzner_failover_keepalived_notify_script_master:
+  - service foo reload
+```
+
+To perform additional actions on the instance switching to the master state without overriding the whole notify script use 
+`hetzner_failover_keepalived_notify_script_master` variable.
+
+```yaml
+hetzner_failover_keepalived_notify_script_backup:
+  - service foo reload
+```
+
+To perform additional actions on the instance switching to the backup state without overriding the whole notify script use
+`hetzner_failover_keepalived_notify_script_backup` variable.
 
 ## Dependencies
 

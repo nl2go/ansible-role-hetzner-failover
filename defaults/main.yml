@@ -2,6 +2,8 @@
 hetzner_failover_keepalived_vrrp_version: 3
 hetzner_failover_keepalived_advert_int: 1
 hetzner_failover_keepalived_notify_script: /usr/local/bin/keepalived_notify.sh
+hetzner_failover_keepalived_notify_script_master: []
+hetzner_failover_keepalived_notify_script_backup: []
 hetzner_failover_keepalived_nopreempt: true
 
 hetzner_failover_keepalived_vswitch_routing_table: vswitch
