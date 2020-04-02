@@ -10,5 +10,14 @@ echo "Executing $NAME failover IP switch"  | logger -t keepalived_notify.sh
 if [ "$STATE" == "MASTER" ] ; then
     HOST_IP=$(ip route get 8.8.8.8 | awk '{print $7 }')
     echo "Setting $NAME failover IP to server IP $HOST_IP" | logger -t keepalived_notify.sh
+
+    {% for script_master in hetzner_failover_keepalived_notify_script_master %}
+    {{ script_master }}
+    {% endfor %}
+fi
+if [ "$STATE" == "BACKUP" ] ; then
+    {% for script_backup in hetzner_failover_keepalived_notify_script_backup %}
+    {{ script_backup }}
+    {% endfor %}
 fi
 echo "Finished $NAME failover IP switch"  | logger -t keepalived_notify.sh
