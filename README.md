@@ -90,7 +90,7 @@ To perform additional actions on the instance switching to the backup state with
 
 ## Dependencies
 
-None.
+- [ansible-role-hetzner-vswitch](https://github.com/nl2go/ansible-role-hetzner-vswitch)
 
 ## Example Playbook
 
