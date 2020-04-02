@@ -1,27 +1,23 @@
 ---
-    language: python
-    services: docker
+language: python
+services: docker
 
-    env:
-      global:
-        - MOLECULE_PROJECT_DIR: "$TRAVIS_BUILD_DIR"
-        - MOLECULE_ROLE_NAME: "$(basename $TRAVIS_BUILD_DIR)"
-        - HCLOUD_TOKEN: "$HCLOUD_TOKEN"
+env:
+  global:
+    - MOLECULE_PROJECT_DIR: "$TRAVIS_BUILD_DIR"
+    - MOLECULE_ROLE_NAME: "$(basename $TRAVIS_BUILD_DIR)"
+    - HCLOUD_TOKEN: "$HCLOUD_TOKEN"
 
-    before_script:
-      - wget https://raw.githubusercontent.com/nl2go/docker-molecule/3.0.2-n2g-1.0.1/docker-compose.yml
-      - docker-compose up -d
+before_script:
+  - wget https://raw.githubusercontent.com/nl2go/docker-molecule/3.0.2-n2g-1.0.1/docker-compose.yml
+  - docker-compose up -d
 
-    script:
-      - docker-compose exec -e HCLOUD_TOKEN="$HCLOUD_TOKEN" molecule molecule test --all
+script:
+  - docker-compose exec -e HCLOUD_TOKEN="$HCLOUD_TOKEN" molecule molecule test --all
 
-    after_script:
-      - docker-compose down
-      - codecov
+after_script:
+  - docker-compose down
+  - codecov
 
-    notifications:
-      webhooks: https://galaxy.ansible.com/api/v1/notifications/
-
-    branches:
-      only:
-      - master
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
