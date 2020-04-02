@@ -11,7 +11,7 @@
   tasks:
     - name: Create SSH key
       user:
-        name: "{{ lookup('env', 'USER') }}"
+        name: "{{ lookup('env', 'USER') | default('root', true) }}"
         generate_ssh_key: true
         ssh_key_file: "{{ ssh_path }}"
         force: true

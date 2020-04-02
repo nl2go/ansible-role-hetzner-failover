@@ -81,6 +81,10 @@ None.
 Use [docker-molecule](https://github.com/nl2go/docker-molecule) following the instructions to run [Molecule](https://molecule.readthedocs.io/en/stable/)
 or install [Molecule](https://molecule.readthedocs.io/en/stable/) locally (not recommended, version conflicts might appear).
 
+Provide Hetzner Cloud token:
+
+    export HCLOUD_TOKEN=123abc456efg
+
 Use following to run tests:
 
     molecule test --all

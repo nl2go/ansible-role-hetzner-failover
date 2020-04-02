@@ -13,7 +13,7 @@
       - docker-compose up -d
 
     script:
-      - docker-compose exec -e HCLOUD_TOKEN="$HCLOUD_TOKEN" -e USER=root molecule molecule test --all
+      - docker-compose exec -e HCLOUD_TOKEN="$HCLOUD_TOKEN" molecule molecule test --all
 
     after_script:
       - docker-compose down
