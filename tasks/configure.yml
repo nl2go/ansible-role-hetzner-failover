@@ -19,37 +19,8 @@
 - name: Define additional routing table that will handle new rules and routes
   lineinfile:
     path: /etc/iproute2/rt_tables
-    regexp: '^1 vswitch'
-    line: 1 vswitch
-
-- name: Make sure ip-up and if-down hooks directories exist
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: '0755'
-    owner: root
-    group: root
-  with_items:
-    - /etc/network/if-up.d
-    - /etc/network/if-down.d
-
-- name: Copy across interfaces if-up hook scripts
-  template:
-    src: if-up.j2
-    dest: /etc/network/if-up.d/z90-{{ hetzner_failover_keepalived_physical_device }}
-    owner: root
-    group: root
-    mode: 0755
-  notify: Restart vswitch network interface
-
-- name: Copy across interfaces if-down hook scripts
-  template:
-    src: if-down.j2
-    dest: /etc/network/if-down.d/z90-{{ hetzner_failover_keepalived_physical_device }}
-    owner: root
-    group: root
-    mode: 0755
-  notify: Restart vswitch network interface
+    regexp: "^1 {{ hetzner_failover_keepalived_vswitch_routing_table }}"
+    line: "1 {{ hetzner_failover_keepalived_vswitch_routing_table }}"
 
 - name: Copy across dummy interface settings
   template:
@@ -75,7 +46,7 @@
 - name: Copy across keepalived notify script
   template:
     src: keepalived_notify.sh.j2
-    dest: /usr/local/bin//keepalived_notify.sh
+    dest: /usr/local/bin/keepalived_notify.sh
     owner: root
     group: root
     mode: 0755
