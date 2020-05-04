@@ -36,5 +36,4 @@
     hetzner_failover_keepalived_private_virtual_router_id: 84
     hetzner_failover_keepalived_private_ipaddress: 192.168.200.250
     hetzner_failover_keepalived_private_network_prefix: 24
-    hetzner_failover_keepalived_private_default_gateway: 192.168.200.1
     hetzner_failover_keepalived_vswich_id: 4023
